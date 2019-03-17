@@ -4,8 +4,9 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <title>サンプル：ポリゴンの表示</title>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWC0At8Ol8zFxu4yz5VEKPZmFDOyJKpyw&callback=initMap"></script>
-    <script src="./js/googlemap.js"></script>
+    <script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyCWC0At8Ol8zFxu4yz5VEKPZmFDOyJKpyw&sensor=false"
+        type="text/javascript" charset="utf-8"></script>
+    <script src="./js/code1_1.js" type="text/javascript"></script>
     <!-- viewport meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,8 +16,12 @@
 
 </head>
 
-<body>
-    <div id="app" style="width: 80vw; height: 80vh"></div>
+<body onload="initialize()" onunload="GUnload()">
+    <div id="map_canvas" style="width: 80vw; height: 80vh"></div>
+
+
+
+
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal1">
         Launch demo modal
     </button>
@@ -30,32 +35,44 @@
                     </button>
                 </div>
                 <div class="modal-body modal-lg">
-                        <div class="form-group">
-                            <label class="control-label">User Name</label>
-                            <input class="form-control" type="text" id="txtuname">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Select Your Icon</label>
-                            <select class="form-control" id="selIcon">
-                                <option value="dog">INU-SAN</option>
-                                <option value="cat">NEKO-SAN</option>
-                                <option value="bir">TORI-SAN</option>
-                                <option value="usa">USAGI-SAN</option>
-                            </select>
-                        </div>
-                        <div style="width:200px; height:200px;">
-                            <img id="imgIconImg" src="" />
-                            </div>
+                    <div class="form-group">
+                        <label class="control-label">User Name</label>
+                        <input class="form-control" type="text" id="txtuname" value="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Select Your Team</label>
+                        <select class="form-control" id="region">
+                            <option value="jap">JAPAN</option>
+                            <option value="usa">USA</option>
+                            <option value="bos">BOSNIA and HERZEGOVINA</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Select Your Team</label>
+                        <select class="form-control" id="selIcon">
+                            <option value="dog">INU-SAN</option>
+                            <option value="cat">NEKO-SAN</option>
+                            <!-- <option value="bir">TORI-SAN</option>
+                            <option value="usa">USAGI-SAN</option> -->
+                        </select>
+                    </div>
+                    <div style="width:200px; height:200px;">
+                        <img id="imgIconImg" src="" />
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary">OK</button>
+                    <button type="button" class="btn btn-primary" id="btnAuthOK">OK</button>
                 </div>
             </div>
         </div>
     </div>
 
-
+    <button type="button" class="btn btn-primary" id="ajaxbutton">
+        ajaxbutton
+    </button>
+    <div if='fetchdatahtml'>
+    </div>
 
     <!-- jQuery、Popper.js、Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -68,21 +85,43 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<script>
-    $(document).ready(function(){
-        changeIconImg();
-    }
+    <script>
+        $(document).ready(function () {
+            changeIconImg();
+        }
 
-    )
-    $('[id$=selIcon]').change(function(){
-        $('#txtuname').val($('[id$=selIcon]').val());
-        changeIconImg();
-    });
-    function changeIconImg(){
-        var url = './images/'+$('[id$=selIcon]').val()+'.png';
-        $('#imgIconImg').attr('src', url);
-    }
-</script>
+        )
+        $('[id$=selIcon]').change(function () {
+            $('#txtuname').val($('[id$=selIcon]').val());
+            changeIconImg();
+        });
+        function changeIconImg() {
+            var url = './images/svg/' + $('[id$=selIcon]').val() + '-solid.svg'//+ '.png';
+            $('#imgIconImg').attr('src', url);
+        }
+
+        $('#btnAuthOK').click(function () {
+            $('body').removeClass('modal-open');
+        });
+
+
+        $(function () {
+            $('#ajaxbutton').click(function () {
+                $(this).text("押された");
+                $.ajax({
+                    url: "http://d926cfad.ngrok.io/api/v1/pin",
+                    type: "post",
+                    dataType: "html"
+                }).done(function (response) {
+                    $("#fetchdatahtml").html(response);
+                    alert("success");
+                }).fail(function () {
+                    alert("failed");
+                });
+            });
+        });
+
+    </script>
 </body>
 
 
