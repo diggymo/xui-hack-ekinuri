@@ -74,11 +74,19 @@
         crossorigin="anonymous"></script>
 
 <script>
+    $(document).ready(function(){
+        changeIconImg();
+    }
+
+    )
     $('[id$=selIcon]').change(function(){
         $('#txtuname').val($('[id$=selIcon]').val());
+        changeIconImg();
+    });
+    function changeIconImg(){
         var url = './images/'+$('[id$=selIcon]').val()+'.png';
         $('#imgIconImg').attr('src', url);
-    });
+    }
 </script>
 </body>
 
