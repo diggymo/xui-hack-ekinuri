@@ -166,7 +166,7 @@ export default {
               lat: station.lat,
               lng: station.lng
             },
-            // icon: `http://localhost:8080/images/svg/train-solid.svg`,
+            icon: `./images/svg/train-solid.svg`,
             map: this.map
           });
 
