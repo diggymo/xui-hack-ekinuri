@@ -166,7 +166,11 @@ export default {
               lat: station.lat,
               lng: station.lng
             },
-            icon: `./images/svg/train-solid.svg`,
+                icon: {
+                    url: `./images/svg/train-solid.svg`,
+                    scaledSize: new google.maps.Size(15, 15),
+                    opacity:0.5,
+                },
             map: this.map
           });
 
