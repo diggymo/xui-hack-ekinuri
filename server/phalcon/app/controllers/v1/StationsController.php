@@ -14,9 +14,7 @@ class StationsController extends BaseV1Controller
      */
     public function search()
     {
-        $stations = \Stations::find([
-            'prefecture' => 27
-        ]);
+        $stations = \Stations::query()->andWhere("prefecture=27")->execute();
         return $this->success($stations)->send();
     }
 }
