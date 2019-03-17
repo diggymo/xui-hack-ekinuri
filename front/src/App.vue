@@ -1,10 +1,9 @@
 <template>
   <div>
     <div id="map" style="width: 100%;height: 500px;"></div>
-    <div >
-      <button @clicK="onClickSenkyo">
-        占拠！！！！！
-      </button>
+    <div>
+      <button @clicK="onClickSenkyo">占拠！！！！！</button>
+      <button @clicK="syncStation">駅追加</button>
     </div>
   </div>
 </template>
@@ -14,9 +13,9 @@
 /* eslint-disable no-undef */
 var scriptjs = require("scriptjs");
 
-const API_URL = "http://d926cfad.ngrok.io"
+const API_URL = "http://d926cfad.ngrok.io";
 
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "App",
@@ -51,11 +50,12 @@ export default {
       center: null,
       targetMarker: null,
       searchQuery: "",
-      stations: []
+      stations: [],
+      team: "cat"
     };
   },
   created() {
-      this.getStations();
+    this.getStations();
     /* eslint-disable no-console */
     console.log("created!!!");
     this.init();
@@ -65,32 +65,7 @@ export default {
     console.log("mount!!!");
     this.init();
   },
-  watch: {
-    stations(val) {
-      val.forEach(station => {
-      let marker = new google.maps.Marker({
-          position: {
-            lat: station.lat,
-            lng: station.lng
-          },
-          icon: "",
-          map: this.map,
-          metadata: {
-            franchises: franchises,
-            hasEventInSession: hasEventInSessin,
-            key: key
-          }
-        });
-
-        // クリック時に中心に移動させて店舗をハイライト
-        marker.addListener("click", () => {
-          this.setPosition(franchises[0].latitude, franchises[0].longitude);
-          this.highlightMarker(marker, hasEventInSessin);
-        });
-        this.formattedMarkers.push(marker);  
-      });
-    }
-  },
+  watch: {},
   methods: {
     init() {
       if (this.address) {
@@ -166,29 +141,46 @@ export default {
         this.errorGeolocationCallback
       );
     },
-     /**
+    /**
      * 位置情報取得success時callback
      */
     successGeolocationCallback() {
       // const lat = position.coords.latitude;
       // const lng = position.coords.longitude;
-      
       // axios.post(`${API_URL}/api/v1/pin`, {
-
       // }).then(res => {
-        
       // })
     },
     /**
      * 位置情報取得エラー時callback
      */
     errorGeolocationCallback() {
-      alert("位置情報を取得できませんでした")
+      alert("位置情報を取得できませんでした");
     },
     getStations() {
       axios.get(`${API_URL}/api/v1/stations`).then(res => {
-        this.stations = res.data
-      })
+        this.stations = res.data;
+        res.data.forEach(station => {
+          new google.maps.Marker({
+            position: {
+              lat: station.lat,
+              lng: station.lng
+            },
+            // icon: `http://localhost:8080/images/svg/train-solid.svg`,
+            map: this.map
+          });
+
+          // // クリック時に中心に移動させて店舗をハイライト
+          // marker.addListener("click", () => {
+          //   this.setPosition(franchises[0].latitude, franchises[0].longitude);
+          //   this.highlightMarker(marker, hasEventInSessin);
+          // });
+          // this.formattedMarkers.push(marker);
+        });
+      });
+    },
+    syncStation() {
+      console.error("sync!!");
     }
   }
 };
