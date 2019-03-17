@@ -30,8 +30,8 @@
                 </div>
                 <div class="modal-body modal-lg">
                     <div class="form-group">
-                        <label class="control-label">User Name</label>
-                        <input class="form-control" type="text" id="txtuname" value="name">
+                        <label class="control-label" for="txtuname">User Name</label>
+                        <input class="form-control" type="text" id="txtuname"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Select Your Team</label>
@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Select Your Team</label>
-                        <select class="form-control" id="selIcon">
+                        <select class="form-control" id="selteam">
                             <option value="dog">INU-SAN</option>
                             <option value="cat">NEKO-SAN</option>
                             <!-- <option value="bir">TORI-SAN</option>
@@ -61,11 +61,7 @@
             </div>
         </div>
     </div>
-
-    <button type="button" class="btn btn-primary" id="ajaxbutton">
-        ajaxbutton
-    </button>
-    <div if='fetchdatahtml'>
+    <div id='fetchdatahtml'>
     </div>
 
     <!-- jQuery、Popper.js、Bootstrap JS -->
@@ -85,12 +81,11 @@
         }
 
         )
-        $('[id$=selIcon]').change(function () {
-            $('#txtuname').val($('[id$=selIcon]').val());
+        $('[id$=selteam]').change(function () {
             changeIconImg();
         });
         function changeIconImg() {
-            var url = './images/svg/' + $('[id$=selIcon]').val() + '-solid.svg'//+ '.png';
+            var url = './images/svg/' + $('[id$=selteam]').val() + '-solid.svg'//+ '.png';
             $('#imgIconImg').attr('src', url);
         }
 
@@ -100,12 +95,16 @@
 
 
         $(function () {
-            $('#ajaxbutton').click(function () {
-                $(this).text("押された");
+            $('#btnAuthOK').click(function () {
                 $.ajax({
-                    url: "http://d926cfad.ngrok.io/api/v1/pin",
+                    url: "http://d926cfad.ngrok.io/api/v1/user",
                     type: "post",
-                    dataType: "html"
+                    dataType: "jsonp",
+                    data: {
+                        name: $('#txtuname').val(),
+                        region: $('#region').val(),
+                        team: $('#selteam').val()
+                    }
                 }).done(function (response) {
                     $("#fetchdatahtml").html(response);
                     alert("success");
