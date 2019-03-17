@@ -1,0 +1,27 @@
+[wrong_params]
+status=400
+message="Bad Request"
+
+[404]
+status=404
+message="error of 404."
+
+[uncreated]
+status=400
+message="user is yet uncreated."
+
+[500]
+status=500
+message="error of 500."
+
+[not_authorized]
+status=403
+message="You are not authorized to view"
+
+[test]
+status=411
+message="testtest"
+
+[unauthorized]
+status=401
+message="Unauthorized"

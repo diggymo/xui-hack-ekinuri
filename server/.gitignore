@@ -1,0 +1,37 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Phalcon template
+/phalcon/cache/
+/config/development/
+### Composer template
+/phalcon/vendor/
+### index.html等はnpmでビルドするので、無視
+/phalcon/public/*
+!/phalcon/public/elb-health-check.html
+!/phalcon/public/index.php
+### 各自の環境のため無視
+.idea
+/phalcon/.env
+/phalcon/.phalcon
+.vscode
+###テストDBのデータ
+mysql/volumes
+### front側
+.DS_Store
+/front/node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+
+# lambda用
+deploy_package.zip
+
+
+# 見ちゃダメよん
+ci
+front

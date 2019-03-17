@@ -1,0 +1,4 @@
+# さげる
+phalcon migration run --version=1.0.0
+# あげる
+phalcon migration run

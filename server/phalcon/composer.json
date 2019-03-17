@@ -1,0 +1,21 @@
+{
+  "require-dev": {
+    "phalcon/ide-stubs": "^3.3",
+    "vlucas/phpdotenv": "^2.4",
+    "yosymfony/toml": "^1.0",
+    "firebase/php-jwt": "^5.0",
+    "minishlink/web-push": "^4.0",
+    "hybridauth/hybridauth": "^2.10",
+    "aws/aws-sdk-php": "^3.57",
+    "abraham/twitteroauth": "^0.7.4",
+    "facebook/graph-sdk": "^5.6",
+    "knplabs/github-api": "^2.8",
+    "php-http/guzzle6-adapter": "^1.1"
+  },
+  "require": {
+    "phalcon/incubator": "^3.3",
+    "ginq/ginq": "^0.2.4",
+    "stripe/stripe-php": "^6.8",
+    "intervention/image": "^2.4"
+  }
+}

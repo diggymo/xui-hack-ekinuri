@@ -1,0 +1,28 @@
+version: '2'
+services:
+  # mysql
+  db:
+    image: mysql:5.7
+    container_name: ekinuri-mysql57
+    # mysql8.0での修正点
+    # SELECT user, host, plugin FROM mysql.user;で検証できる
+    environment:
+      MYSQL_DATABASE: ekinuri
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3111:3306"
+    volumes:
+      - $PWD/mysql/volumes:/var/lib/mysql  # mysqlのデータ永続化するディレクトリの絶対パス
+      - $PWD/mysql/conf:/etc/mysql/conf.d  # mysqlのmy.confのおくディレクトリの絶対パス
+  # phalcon
+  web:
+    build: .
+    container_name: ekinuri-web
+    ports:
+      - "8111:80"
+    volumes:
+      - $PWD/nginx.conf/:/etc/nginx/nginx.conf
+      - $PWD/phalcon/:/var/www/phalcon
+    tty: true
+    depends_on:
+      - db
